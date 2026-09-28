@@ -32,7 +32,7 @@ namespace FD.TechTest.LibraryManagement.Controllers
         /// <param name="request">Requête pour ajouter un livre</param>
         /// <returns>L'identifiant du livre ajouté</returns>
         [HttpPost("add-book")]
-        public IActionResult AddBook([FromForm] AddBookRequest request)
+        public IActionResult AddBook([FromBody] AddBookRequest request)
         {
             var addedBookId = _bookService.AddBook(request.Title, request.Author);
 
