@@ -1,4 +1,5 @@
-﻿using FD.TechTest.LibraryManagement.Domain.Services;
+﻿using FD.TechTest.LibraryManagement.Domain.Exceptions;
+using FD.TechTest.LibraryManagement.Domain.Services;
 using FD.TechTest.LibraryManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,9 +35,16 @@ namespace FD.TechTest.LibraryManagement.Controllers
         [HttpPost("add-book")]
         public IActionResult AddBook([FromBody] AddBookRequest request)
         {
-            var addedBookId = _bookService.AddBook(request.Title, request.Author);
+            try
+            {
+                var addedBookId = _bookService.AddBook(request.Title, request.Author);
 
-            return Ok(addedBookId);
+                return Ok(addedBookId);
+            }
+            catch (LibraryManagementException exc)
+            {
+                return BadRequest(new { error = exc.Message });
+            }
         }
     }
 }
