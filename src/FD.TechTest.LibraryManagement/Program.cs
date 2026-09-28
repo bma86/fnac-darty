@@ -29,4 +29,5 @@ void ConfigureServices(IServiceCollection services)
 {
     services.AddSingleton<IBookRepository, BookRepository>();
     services.AddScoped<ILibraryService, LibraryService>();
+    services.AddScoped<ICustomerRepository, CustomerRepository>();
 }

@@ -46,5 +46,16 @@ namespace FD.TechTest.LibraryManagement.Controllers
                 return BadRequest(new { error = exc.Message });
             }
         }
+
+        /// <summary>
+        /// Récupère les clients ayant emprunté au moins un livre
+        /// </summary>
+        [HttpGet("customers-who-borrowed-books")]
+        public IActionResult GetCustomersWhoBorrowedBooks()
+        {
+            var customers = _bookService.GetCustomersWhoBorrowedBooks();
+
+            return Ok(customers);
+        }
     }
 }
