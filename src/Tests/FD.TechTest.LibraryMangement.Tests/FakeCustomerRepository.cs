@@ -18,6 +18,5 @@ public partial class LibraryServiceTests
         {
             return _customers.AsReadOnly();
         }
-        Ò
     }
 }

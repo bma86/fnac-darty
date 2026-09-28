@@ -43,4 +43,40 @@ public partial class LibraryServiceTests
         Assert.That(bookRepository.GetAll(), Has.Count.EqualTo(1));
     }
 
+    [Test]
+    public void GetCustomersWhoBorrowedBooks_ReturnsOnlyCustomersWithBorrowedBooks()
+    {
+        var customerWithOneBorrowedBook = new Customer(
+            1,
+            "Customer 1",
+            new List<BorrowedBook>
+            {
+                new(1, new DateTime(2026, 1, 1))
+            });
+        var customerWithoutBorrowedBooks = new Customer(
+            2,
+            "Customer 2",
+            Array.Empty<BorrowedBook>());
+        var customerWithTwoBorrowedBooks = new Customer(
+            3,
+            "Customer 3",
+            new List<BorrowedBook>
+            {
+                new(2, new DateTime(2026, 1, 2)),
+                new(3, new DateTime(2026, 1, 3))
+            });
+        var bookRepository = new FakeBookRepository();
+        var customerRepository = new FakeCustomerRepository(
+            customerWithOneBorrowedBook,
+            customerWithoutBorrowedBooks,
+            customerWithTwoBorrowedBooks);
+        var service = new LibraryService(bookRepository, customerRepository);
+
+        var customers = service.GetCustomersWhoBorrowedBooks();
+
+        Assert.That(customers, Has.Count.EqualTo(2));
+        Assert.That(customers.Select(customer => customer.Id),
+            Is.EquivalentTo(new[] { 1, 3 }));
+    }
+
 }
