@@ -7,10 +7,12 @@ namespace FD.TechTest.LibraryManagement.Domain.Services
     public class LibraryService : ILibraryService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public LibraryService(IBookRepository bookRepository)
+        public LibraryService(IBookRepository bookRepository, ICustomerRepository customerRepository)
         {
             _bookRepository = bookRepository;
+            _customerRepository = customerRepository;
         }
 
         /// <summary>
@@ -46,6 +48,11 @@ namespace FD.TechTest.LibraryManagement.Domain.Services
             _bookRepository.AddBook(book);
 
             return book.Id;
+        }
+
+        public IReadOnlyCollection<Customer> GetCustomersWhoBorrowedBooks()
+        {
+            return _customerRepository.GetAll().Where(customer => customer.BorrowedBooks.Count > 0).ToList().AsReadOnly();
         }
     }
 }

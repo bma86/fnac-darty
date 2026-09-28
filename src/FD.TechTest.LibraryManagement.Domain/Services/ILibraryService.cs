@@ -6,5 +6,7 @@ namespace FD.TechTest.LibraryManagement.Domain.Services
     {
         int AddBook(string Title, string Author);
         IReadOnlyCollection<Book> GetAllBooks();
+        IReadOnlyCollection<Customer> GetCustomersWhoBorrowedBooks();
+
     }
 }
