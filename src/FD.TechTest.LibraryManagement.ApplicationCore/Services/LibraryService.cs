@@ -37,7 +37,8 @@ namespace FD.TechTest.LibraryManagement.Domain.Services
                 throw new InvalidBookTitleException();
             }
             var allBooks = _bookRepository.GetAll();
-            if (allBooks.Any(b => b.Title == title && b.Author == author))
+            if (allBooks.Any(b => b.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase)
+             && b.Author.Equals(author, StringComparison.CurrentCultureIgnoreCase)))
             {
                 throw new DuplicateBookException();
             }
