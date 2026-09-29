@@ -13,6 +13,13 @@
         {
         }
     }
+    public class InvalidBookAuthorException : LibraryManagementException
+    {
+        public InvalidBookAuthorException()
+            : base("The book author cannot be empty.")
+        {
+        }
+    }
     public class DuplicateBookException : LibraryManagementException
     {
         public DuplicateBookException()

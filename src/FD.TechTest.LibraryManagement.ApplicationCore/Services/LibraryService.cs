@@ -32,9 +32,15 @@ namespace FD.TechTest.LibraryManagement.Domain.Services
         /// <returns>L'identifiant du livre ajouté</returns>
         public int AddBook(string title, string author)
         {
-            if (string.IsNullOrWhiteSpace(title) || title.Trim().Length < 3)
+            title = title?.Trim() ?? string.Empty;
+            author = author?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(title) || title.Length < 3)
             {
                 throw new InvalidBookTitleException();
+            }
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                throw new InvalidBookAuthorException();
             }
             var allBooks = _bookRepository.GetAll();
             if (allBooks.Any(b => b.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase)
